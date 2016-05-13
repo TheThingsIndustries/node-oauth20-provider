@@ -25,3 +25,7 @@ module.exports.checkPassword = function(user, password, cb) {
 module.exports.fetchFromRequest = function(req) {
     return req.session.user;
 };
+
+module.exports.clientAuthorizationPref = function(user, client, cb) {
+    cb(null, user.authorized_clients && user.authorized_clients.indexOf(client.id) >= 0);
+};

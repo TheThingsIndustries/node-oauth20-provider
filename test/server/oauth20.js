@@ -9,7 +9,7 @@ module.exports = function(type) {
         throw new Error('Unknown model type: ' + type);
 
     // Redefine oauth20 abstract methods
-    
+
     // Set client methods
     obj.model.client.getId = model.client.getId;
     obj.model.client.getRedirectUri = model.client.getRedirectUri;
@@ -23,6 +23,7 @@ module.exports = function(type) {
     obj.model.user.fetchByUsername = model.user.fetchByUsername;
     obj.model.user.fetchFromRequest = model.user.fetchFromRequest;
     obj.model.user.checkPassword = model.user.checkPassword;
+    obj.model.user.clientAuthorizationPref = model.user.clientAuthorizationPref
 
     // Refresh token
     obj.model.refreshToken.getUserId = model.refreshToken.getUserId;

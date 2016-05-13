@@ -5,6 +5,16 @@ module.exports = {
             id:             'user1.id',
             username:       'user1.username',
             password:       'user1.password'
+        },
+        {
+            id:             'user2.id',
+            username:       'user2.username',
+            password:       'user2.password',
+            authorized_clients: [
+              'client1.id',
+              'client2.id',
+              'client3.id'
+            ],
         }
     ],
     clients: [

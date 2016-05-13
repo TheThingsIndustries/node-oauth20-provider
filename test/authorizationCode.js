@@ -91,4 +91,29 @@ describe('Authorization Code Grant Type ',function() {
             .expect(200, new RegExp(data.users[0].id, 'i'), done);
     });
 
+    it('POST /authorize with response_type="code" user pref already authorized client expect code redirect', function(done) {
+        request(app)
+            .post(loginUrl)
+            .send({ username: data.users[1].username, password: data.users[1].password })
+            .expect('Location', new RegExp('authorization'))
+            .expect(302, function(err, res) {
+                if (err) return done(err);
+                var _cookie = cookiePattern.exec(res.headers['set-cookie'][0])[0];
+
+                request(app)
+                    .get(authorizationUrl)
+                    .set('Cookie', _cookie)
+                    .expect(302, function(err, res) {
+                        if (err) return done(err);
+
+                        var uri = res.headers.location;
+                        if (uri.indexOf('?') == -1) return done(new Error('Failed to parse redirect uri'));
+                        var q = query.parse(uri.substr(uri.indexOf('?') + 1));
+                        if (!q['code']) return done(new Error('No code value found in redirect uri'));
+
+                        code = q['code'];
+                        done();
+                    })
+            });
+    })
 });
